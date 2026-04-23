@@ -75,7 +75,6 @@
                         <tempDirectory>${project.build.directory}/tmp</tempDirectory>
                         <resourceBases>
                             <resourceBase>${project.basedir}/src/main/webapp</resourceBase>
-                            <resourceBase>${project.basedir}/EXTERNAL_RESOURCES</resourceBase>
                         </resourceBases>
                     </webApp>
                 </configuration>

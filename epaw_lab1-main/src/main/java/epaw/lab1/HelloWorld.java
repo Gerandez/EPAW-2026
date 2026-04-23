@@ -19,36 +19,41 @@ public class HelloWorld extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
         out.println("<meta charset='UTF-8'>");
         out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-        out.println("<title>vibescrolling</title>");
+        out.println("<title>Vibescrolling</title>");
         out.println("<style>");
-        out.println("body { font-family: Arial, sans-serif; margin: 0; background: linear-gradient(135deg, #f5f7fa, #e4ebf5); color: #1f2937; }");
-        out.println("main { max-width: 960px; margin: 0 auto; padding: 32px 20px 48px; }");
-        out.println("h1 { margin: 0 0 20px; }");
-        out.println(".card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08); margin-bottom: 24px; }");
-        out.println("table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 12px; }");
-        out.println("th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #e5e7eb; }");
-        out.println("th { background: #0f172a; color: white; }");
-        out.println("tr:nth-child(even) td { background: #f8fafc; }");
-        out.println("form { display: grid; gap: 12px; }");
-        out.println("label { font-weight: 600; display: block; margin-bottom: 6px; }");
-        out.println("input, textarea, select { width: 100%; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px 14px; font: inherit; }");
-        out.println("textarea { min-height: 110px; resize: vertical; }");
-        out.println("button { background: #2563eb; color: white; border: 0; border-radius: 10px; padding: 12px 16px; font: inherit; font-weight: 700; cursor: pointer; width: fit-content; }");
-        out.println("button:hover { background: #1d4ed8; }");
-        out.println(".muted { color: #64748b; margin-top: 8px; }");
-        out.println(".empty { text-align: center; color: #64748b; }");
+        out.println("body { font-family: Arial, sans-serif; margin: 0; background: #f7f7f5; color: #1f2933; }");
+        out.println("main { max-width: 760px; margin: 0 auto; padding: 48px 20px; }");
+        out.println("h1 { margin: 0; font-size: 2rem; font-weight: 700; letter-spacing: -0.03em; }");
+        out.println("h2 { margin: 0 0 18px; font-size: 1.15rem; font-weight: 700; }");
+        out.println(".subtitle { margin: 8px 0 32px; color: #667085; line-height: 1.5; }");
+        out.println(".card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; margin-bottom: 18px; }");
+        out.println("table { width: 100%; border-collapse: collapse; }");
+        out.println("th, td { padding: 12px 0; text-align: left; border-bottom: 1px solid #edf0f2; vertical-align: top; }");
+        out.println("th { color: #667085; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }");
+        out.println("tr:last-child td { border-bottom: 0; }");
+        out.println("form { display: grid; gap: 14px; }");
+        out.println("label { font-size: 0.9rem; font-weight: 700; display: block; margin-bottom: 6px; }");
+        out.println("input, textarea, select { width: 100%; box-sizing: border-box; border: 1px solid #d0d5dd; border-radius: 8px; padding: 10px 12px; font: inherit; background: white; color: #1f2933; }");
+        out.println("input:focus, textarea:focus, select:focus { outline: 2px solid #dbeafe; border-color: #2563eb; }");
+        out.println("textarea { min-height: 96px; resize: vertical; }");
+        out.println("button { background: #111827; color: white; border: 0; border-radius: 8px; padding: 10px 14px; font: inherit; font-weight: 700; cursor: pointer; width: fit-content; }");
+        out.println("button:hover { background: #374151; }");
+        out.println(".muted { color: #667085; margin: 14px 0 0; font-size: 0.95rem; }");
+        out.println(".empty { text-align: center; color: #667085; padding: 16px 0; }");
         out.println("</style>");
         out.println("</head>");
         out.println("<body>");
         out.println("<main>");
-        out.println("<h1>vibescrolling</h1>");
+        out.println("<h1>Vibescrolling</h1>");
+        out.println("<p class='subtitle'>Create an agent profile, store it in SQLite, and show it below.</p>");
         out.println("<div class='card'>");
+        out.println("<h2>Current feed</h2>");
         out.println("<table>");
         out.println("<tr><th>ID</th><th>Agent Name</th><th>Profile</th></tr>");
 
@@ -57,13 +62,13 @@ public class HelloWorld extends HttpServlet {
         try (DBManager db = new DBManager()) {
             PreparedStatement stmt = db.prepareStatement("SELECT id, name, description FROM users");
             ResultSet rs = stmt.executeQuery();
-            
+
             while (rs.next()) {
                 hasRows = true;
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
-                
+
                 out.println("<tr>");
                 out.println("<td>" + id + "</td>");
                 out.println("<td>" + name + "</td>");
@@ -90,7 +95,7 @@ public class HelloWorld extends HttpServlet {
         out.println("<div><label for='description'>Tagline</label><textarea id='description' name='description' maxlength='255' required></textarea></div>");
         out.println("<button type='submit'>Create Agent</button>");
         out.println("</form>");
-        out.println("<p class='muted'>vibescrolling creates an agent profile and adds it to the public feed.</p>");
+        out.println("<p class='muted'>Vibescrolling saves a new row in SQLite and reloads the feed automatically.</p>");
         out.println("</div>");
 
         out.println("</main>");
